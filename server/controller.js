@@ -1,6 +1,7 @@
 const axios = require('axios');
 const Promise = require('bluebird');
 const helper = require('./helper.js');
+const TOKEN = require('../config.js');
 
 class Controller {
 
@@ -11,7 +12,7 @@ class Controller {
       method: 'GET',
       params: {
         proximity: req.query.coordinates,
-        'proximity_square': 10
+        'proximity_square': 5
       }
     };
 
@@ -19,9 +20,8 @@ class Controller {
       .then((response) => {
 
         let incidents = response.data.incidents;
-        let atRisk = helper.atRisk(incidents);
-        incidents = helper.filter(incidents);
-
+        let atRisk = helper.atRiskIncidents(incidents);
+        incidents = helper.filterTheft(incidents);
 
         let data = {
           incidents: incidents,
@@ -41,9 +41,31 @@ class Controller {
 
   weather(req, res) {
 
+    let config = {
+      url: 'https://api.openweathermap.org/data/2.5/onecall',
+      method: 'GET',
+      params: {
+        appid: TOKEN.weatherTOKEN,
+        lat: req.query.lat,
+        lon: req.query.lon,
+        exclude: 'daily'
+      }
+    };
 
+    return axios(config)
+      .then((response) => {
 
+        let epochRainTime = helper.filterWeather(response.data);
 
+        let data = {
+          epochRainTime: epochRainTime
+        };
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(400);
+        res.send(err);
+      });
   }
 
 }

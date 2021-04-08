@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 import IncidentList from './components/IncidentList.jsx';
 import Form from './components/Form.jsx';
 import Loading from './components/Loading.jsx';
 import AtRisk from './components/AtRisk.jsx';
-import axios from 'axios';
 
 class App extends React.Component {
 
@@ -12,60 +12,104 @@ class App extends React.Component {
     super(props);
     this.state = {
       incidents: [],
-      coords: '',
+      lat: '',
+      lon: '',
       loadingLocation: false,
+      loadingWeather: false,
       loadingData: false,
-      instantiated: false
+      initialized: false,
+      error: false,
+      epochRainTime: false
     };
   }
 
   getPosition() {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition((location) => {
-        let coords = location.coords.latitude + ',' + location.coords.longitude;
-        resolve(coords);
+        let data = {
+          lat: location.coords.latitude,
+          lon: location.coords.longitude
+        };
+        resolve(data);
       });
     });
   }
 
   getTheftData() {
-    return axios.get('/theft', { params: {coordinates: this.state.coords}});
+    let coordinates = this.state.lat + ',' + this.state.lon;
+    return axios.get('/theft', { params: {coordinates: coordinates}})
+      .then((incidents) => {
+        return incidents.data;
+      });
   }
 
-  getNearbyIncidents() {
+  getWeatherData() {
+    return axios.get('/weather', {
+      params: {
+        lat: this.state.lat,
+        lon: this.state.lon
+      }
+    })
+      .then((response) => {
+        return response.data;
+      });
+  }
+
+  gatherData() {
 
     this.setState({
-      incidents: [],
-      loadingLocation: true
+      loadingLocation: true,
+      error: false
     });
 
     this.getPosition()
-      .then((coords) => {
+      .then((data) => {
 
-        this.setState({
-          coords: coords,
+        let otherState = {
           loadingLocation: false,
           loadingData: true
-        });
+        };
+
+        let state = Object.assign(data, otherState);
+
+        this.setState(state);
 
         return this.getTheftData();
       })
-      .then((res) => {
+      .then((data) => {
         let otherState = {
           loadingData: false,
-          instantiated: true
+          loadingWeather: true
         };
 
-        let state = Object.assign(res.data, otherState);
+        let state = Object.assign(data, otherState);
+
+        this.setState(state);
+
+        return this.getWeatherData();
+      })
+      .then((data) => {
+        let otherState = {
+          loadingWeather: false,
+          initialized: true
+        };
+
+        let state = Object.assign(data, otherState);
 
         this.setState(state);
       })
       .catch((err) => {
+        if (err) {
+          console.log(err);
+        }
         this.setState({
-          loadingData: false
+          loadingLocation: false,
+          loadingWeather: false,
+          loadingData: false,
+          error: err
         });
-        console.log(err);
       });
+
   }
 
   render() {
@@ -77,11 +121,13 @@ class App extends React.Component {
     };
 
     return (
-      <div>
-        <Form getNearbyIncidents={this.getNearbyIncidents.bind(this)} />
-        <AtRisk instantiated={this.state.instantiated} theft={this.state.theft} />
-        <Loading location={this.state.loadingLocation} data={this.state.loadingData} />
-        {renderIncidentList()}
+      <div style={{textAlign: 'center'}}>
+        <h1>Bike Lockr</h1>
+        <Form getNearbyIncidents={this.gatherData.bind(this)} />
+        <AtRisk initialized={this.state.initialized} theft={this.state.theft} epochRainTime={this.state.epochRainTime} />
+        <Loading location={this.state.loadingLocation} data={this.state.loadingData} weather={this.state.loadingWeather} />
+        {this.state.incidents.length > 0 &&
+        <IncidentList incidents={this.state.incidents} />}
       </div>
     );
   }

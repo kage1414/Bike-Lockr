@@ -5,7 +5,7 @@ const Incident = (props) => {
   let date = new Date(props.data.occurred_at * 1000);
 
   return (
-    <div style={{width: 'auto', height: 'auto', border: '1px solid black', fontSize: '18px', fontFamily: 'Arial'}}>
+    <div style={{width: 660, height: 'auto', border: '1px solid black', fontSize: '18px', fontFamily: 'Arial', marginLeft: 'auto', marginRight: 'auto'}}>
       {props.data.title}
       <div style={{ fontSize: '11px', fontStyle: 'bold'}}>
         {props.data.description}
