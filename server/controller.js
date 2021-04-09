@@ -97,7 +97,7 @@ class Controller {
 
         let unixRainTime = helper.getUnixRainTime(response.data);
         let data = {
-          unixRainTime: process.env.weatherTime || unixRainTime
+          unixRainTime: process.env.unixRainTime || unixRainTime
         };
 
         if (response.status) {
