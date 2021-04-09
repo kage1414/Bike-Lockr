@@ -17,14 +17,20 @@ class Controller {
 
     return axios.get('https://maps.googleapis.com/maps/api/geocode/json', config)
       .then((response) => {
-        res.status(response.status);
+        if (response.statue) {
+          res.status(response.status);
+        }
         res.send(response.data.results);
       })
       .catch((err) => {
         if (err) {
           console.log(err);
         }
-        res.status(err.response.status);
+        if (err.response.status) {
+          res.status(err.response.status);
+        } else {
+          res.status(400);
+        }
         res.send(err);
       });
   }
@@ -52,14 +58,21 @@ class Controller {
           incidents: incidents,
           theft: atRisk
         };
-        res.status(response.status);
+
+        if (response.statue) {
+          res.status(response.status);
+        }
         res.send(response.data.results);
       })
       .catch((err) => {
         if (err) {
           console.log(err);
         }
-        res.status(err.response.status);
+        if (err.response.status) {
+          res.status(err.response.status);
+        } else {
+          res.status(400);
+        }
         res.send(err);
       });
 
@@ -85,14 +98,21 @@ class Controller {
         let data = {
           unixRainTime: process.env.weatherTime || unixRainTime
         };
-        res.status(response.status);
+
+        if (response.statue) {
+          res.status(response.status);
+        }
         res.send(response.data.results);
       })
       .catch((err) => {
         if (err) {
           console.log(err);
         }
-        res.status(err.response.status);
+        if (err.response.status) {
+          res.status(err.response.status);
+        } else {
+          res.status(400);
+        }
         res.send(err);
       });
   }
