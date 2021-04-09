@@ -17,7 +17,7 @@ class Controller {
 
     return axios.get('https://maps.googleapis.com/maps/api/geocode/json', config)
       .then((response) => {
-        if (response.statue) {
+        if (response.status) {
           res.status(response.status);
         }
         res.send(response.data.results);
@@ -59,10 +59,11 @@ class Controller {
           theft: atRisk
         };
 
-        if (response.statue) {
+        if (response.status) {
           res.status(response.status);
         }
-        res.send(response.data.results);
+        console.log(incidents);
+        res.send(data);
       })
       .catch((err) => {
         if (err) {
@@ -99,10 +100,10 @@ class Controller {
           unixRainTime: process.env.weatherTime || unixRainTime
         };
 
-        if (response.statue) {
+        if (response.status) {
           res.status(response.status);
         }
-        res.send(response.data.results);
+        res.send(data);
       })
       .catch((err) => {
         if (err) {
