@@ -21,22 +21,22 @@ Once the project moves into development, the press release can be used as a touc
   BikeLockr
 ## Sub-Heading ##
   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
-  Cyclists can determine whether it is safe to leave their bike unattended.
+  Cyclists can determine whether it is safe to leave their bike unattended based on factors such as weather and previous thefts in the area.
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
-  Detects and displays any bicycle related incidents within 2 miles of your location within the last 30 days.
+  BikeLockr determines whether it is safe to leave your bicycle unattended or not. It uses different metrics to determine if the area you want to leave your bike is safe to do so, and displays the risk and previous incidents of bicycle theft in the past. The app also takes in real-time weather data to let the user know if they are at risk of getting wet.
 ## Problem ##
   > Describe the problem your product solves.
-  Determining if where they are is a safe place to leave a bike
+  Determine if it is safe to leave your bike unattended in your area.
 ## Solution ##
   > Describe how your product elegantly solves the problem.
-  Takes the user's relative location based on their device, and uses an API to cross-reference bicycle incidents in the area within the last 30 days
+  Takes the user's relative location based on their device, and uses multiple APIs to determine the risk level of your area.
 ## Quote from You ##
   > A quote from a spokesperson in your company.
 
 ## How to Get Started ##
   > Describe how easy it is to get started.
-
+  Just click the button and the app gives you incident information in your area.
 ## Customer Quote ##
   > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
 

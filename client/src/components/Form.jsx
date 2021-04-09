@@ -16,7 +16,7 @@ class Form extends React.Component {
     return (
       <form>
         {/* <input type="text"></input> */}
-        <input type="submit" style={{ width: 660, height: 80 }} onClick={this.getNearbyIncidents} value="Can I Leave My Bike Unattended?"></input>
+        <input type="submit" style={{ width: 660, height: 80, fontSize: '24px' }} onClick={this.getNearbyIncidents} value="Can I Leave My Bike Unattended?"></input>
       </form>
     );
   }
