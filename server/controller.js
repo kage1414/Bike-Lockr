@@ -64,7 +64,6 @@ class Controller {
         if (response.status) {
           res.status(response.status);
         }
-        console.log(incidents);
         res.send(data);
       })
       .catch((err) => {

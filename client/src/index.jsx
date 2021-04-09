@@ -32,9 +32,10 @@ class App extends React.Component {
 
       let inputValue = this.state.inputValue;
 
-      return axios.get('/geoCode', { params: {
-        inputValue: inputValue
-      }})
+      return axios.get('/geoCode', {
+        params: {
+          inputValue: inputValue
+        }})
         .then((response) => {
           if (response.data.length > 0) {
             let stateData = {
@@ -75,10 +76,11 @@ class App extends React.Component {
 
   getTheftData() {
     let coordinates = this.state.lat + ',' + this.state.lon;
-    return axios.get('/theft', { params: {
-      coordinates: coordinates,
-      inputValue: this.state.inputValue
-    }})
+    return axios.get('/theft', {
+      params: {
+        coordinates: coordinates,
+        inputValue: this.state.inputValue
+      }})
       .then((incidents) => {
         return incidents.data;
       });
@@ -117,18 +119,6 @@ class App extends React.Component {
 
         return this.getTheftData();
       })
-      .catch((err) => {
-        if (err) {
-          console.error(err);
-        }
-        this.setState({
-          loadingLocation: false,
-          loadingWeather: false,
-          loadingData: false,
-          error: true,
-          errorMessage: 'Error loading location data'
-        });
-      })
       .then((data) => {
         let otherState = {
           loadingData: false,
@@ -140,18 +130,6 @@ class App extends React.Component {
         this.setState(state);
 
         return this.getWeatherData();
-      })
-      .catch((err) => {
-        if (err) {
-          console.error(err);
-        }
-        this.setState({
-          loadingLocation: false,
-          loadingWeather: false,
-          loadingData: false,
-          error: true,
-          errorMessage: 'Error loading incident data'
-        });
       })
       .then((data) => {
         let otherState = {
@@ -172,7 +150,7 @@ class App extends React.Component {
           loadingWeather: false,
           loadingData: false,
           error: true,
-          errorMessage: 'Error loading weather data'
+          errorMessage: err.message
         });
       });
 
