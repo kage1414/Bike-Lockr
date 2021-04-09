@@ -3,9 +3,6 @@ import Weather from './Weather.jsx';
 
 const AtRisk = (props) => {
 
-  let rainsAt = new Date(props.unixRainTime * 1000);
-  let rainsIn = new Date(rainsAt.getTime() - Date.now());
-
   let risk;
   let subRisk;
 
@@ -26,7 +23,7 @@ const AtRisk = (props) => {
       <div>
         <h2 style={{margin: '0px'}}>{risk}</h2>
         <h3 style={{ margin: '0px' }}>{subRisk}</h3>
-        <Weather rainsIn={rainsIn} />
+        <Weather unixRainTime={props.unixRainTime} rainsIn={rainsIn} />
       </div>}
     </div>
   );

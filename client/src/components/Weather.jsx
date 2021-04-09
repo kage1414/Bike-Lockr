@@ -2,7 +2,10 @@ import React from 'react';
 
 const Weather = (props) => {
 
-  let minutesUntilRain = Math.floor(props.rainsIn.getTime() / 1000 / 60);
+  let rainsAt = new Date(props.unixRainTime * 1000);
+  let rainsIn = new Date(rainsAt.getTime() - Date.now());
+
+  let minutesUntilRain = Math.floor(rainsIn.getTime() / 1000 / 60);
 
   let isRaining = minutesUntilRain === 0;
 
