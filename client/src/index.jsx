@@ -117,6 +117,18 @@ class App extends React.Component {
 
         return this.getTheftData();
       })
+      .catch((err) => {
+        if (err) {
+          console.error(err);
+        }
+        this.setState({
+          loadingLocation: false,
+          loadingWeather: false,
+          loadingData: false,
+          error: true,
+          errorMessage: 'Error loading location data'
+        });
+      })
       .then((data) => {
         let otherState = {
           loadingData: false,
@@ -128,6 +140,18 @@ class App extends React.Component {
         this.setState(state);
 
         return this.getWeatherData();
+      })
+      .catch((err) => {
+        if (err) {
+          console.error(err);
+        }
+        this.setState({
+          loadingLocation: false,
+          loadingWeather: false,
+          loadingData: false,
+          error: true,
+          errorMessage: 'Error loading incident data'
+        });
       })
       .then((data) => {
         let otherState = {
@@ -148,7 +172,7 @@ class App extends React.Component {
           loadingWeather: false,
           loadingData: false,
           error: true,
-          errorMessage: JSON.stringify(err)
+          errorMessage: 'Error loading weather data'
         });
       });
 
