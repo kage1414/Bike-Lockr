@@ -45,15 +45,10 @@ class App extends React.Component {
             return stateData;
           }
         })
-        .catch((err) => {
+        .catch((error) => {
           this.setState({
-            loadingLocation: false,
-            loadingWeather: false,
-            loadingData: false,
-            error: true,
-            errorMessage: JSON.stringify(err)
+            errorMessage: 'Location Error'
           });
-          console.error(err);
         });
     } else {
       return new Promise((resolve, reject) => {
@@ -65,10 +60,9 @@ class App extends React.Component {
           resolve(data);
         }, (error) => {
           this.setState({
-            loadingLocation: false,
-            locationError: true
+            errorMessage: 'Location Error'
           });
-          reject(error.message);
+          reject(error);
         }, {maximumAge: 3000});
       });
     }
@@ -83,6 +77,11 @@ class App extends React.Component {
       }})
       .then((incidents) => {
         return incidents.data;
+      })
+      .catch((error) => {
+        this.setState({
+          errorMessage: 'Incident Error'
+        });
       });
   }
 
@@ -95,6 +94,11 @@ class App extends React.Component {
     })
       .then((response) => {
         return response.data;
+      })
+      .catch((error) => {
+        this.setState({
+          errorMessage: 'Weather Error'
+        });
       });
   }
 
@@ -149,8 +153,8 @@ class App extends React.Component {
           loadingLocation: false,
           loadingWeather: false,
           loadingData: false,
-          error: true,
-          errorMessage: err.message
+          consoleError: err,
+          error: true
         });
       });
 
@@ -169,7 +173,7 @@ class App extends React.Component {
         <h1>Bike Lockr</h1>
         <Form getNearbyIncidents={this.gatherData.bind(this)} handleChange={this.handleChange.bind(this)} />
         <AtRisk initialized={this.state.initialized} theft={this.state.theft} unixRainTime={this.state.unixRainTime} />
-        {this.state.error && <Error errorMessage={this.state.errorMessage} />}
+        {this.state.error && <Error errorMessage={this.state.errorMessage} consoleError={this.state.consoleError} />}
         <Loading location={this.state.loadingLocation} data={this.state.loadingData} weather={this.state.loadingWeather} />
         {this.state.incidents.length > 0 && <IncidentList incidents={this.state.incidents} />}
       </div>
