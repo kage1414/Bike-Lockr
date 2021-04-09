@@ -4,7 +4,8 @@ const Error = (props) => {
 
   return (
     <div>
-      <div>{props.errorMessage}</div>
+      <br/>
+      <div style={{color: 'red'}}>{props.errorMessage}</div>
     </div>
   );
 
