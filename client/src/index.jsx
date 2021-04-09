@@ -19,25 +19,51 @@ class App extends React.Component {
       loadingData: false,
       initialized: false,
       error: false,
-      unixRainTime: false
+      unixRainTime: false,
+      inputValue: ''
     };
   }
 
   getPosition() {
-    return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition((location) => {
-        let data = {
-          lat: location.coords.latitude,
-          lon: location.coords.longitude
-        };
-        resolve(data);
+
+    if (this.state.inputValue) {
+
+      let inputValue = this.state.inputValue;
+
+      return axios.get('/geoCode', { params: {
+        inputValue: inputValue
+      }})
+        .then((response) => {
+          if (response.data.length > 0) {
+            let stateData = {
+              lat: response.data[0].geometry.location.lat,
+              lon: response.data[0].geometry.location.lng
+            };
+            return stateData;
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition((location) => {
+          let data = {
+            lat: location.coords.latitude,
+            lon: location.coords.longitude
+          };
+          resolve(data);
+        });
       });
-    });
+    }
   }
 
   getTheftData() {
     let coordinates = this.state.lat + ',' + this.state.lon;
-    return axios.get('/theft', { params: {coordinates: coordinates}})
+    return axios.get('/theft', { params: {
+      coordinates: coordinates,
+      inputValue: this.state.inputValue
+    }})
       .then((incidents) => {
         return incidents.data;
       });
@@ -106,13 +132,17 @@ class App extends React.Component {
           loadingLocation: false,
           loadingWeather: false,
           loadingData: false,
-          initialized: false,
-          error: false,
-          unixRainTime: false
+          error: err.message
           // errorMessage: err.message
         });
       });
 
+  }
+
+  handleChange(e) {
+    this.setState({
+      inputValue: e.target.value
+    });
   }
 
   render() {
@@ -120,7 +150,7 @@ class App extends React.Component {
     return (
       <div style={{textAlign: 'center'}}>
         <h1>Bike Lockr</h1>
-        <Form getNearbyIncidents={this.gatherData.bind(this)} />
+        <Form getNearbyIncidents={this.gatherData.bind(this)} handleChange={this.handleChange.bind(this)} />
         <AtRisk initialized={this.state.initialized} theft={this.state.theft} unixRainTime={this.state.unixRainTime} />
         {/* {this.state.errorMessage && <Error errorMessage={this.state.errorMessage} />} */}
         <Loading location={this.state.loadingLocation} data={this.state.loadingData} weather={this.state.loadingWeather} />

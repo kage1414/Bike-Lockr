@@ -1,9 +1,31 @@
 const axios = require('axios');
 const Promise = require('bluebird');
 const helper = require('./helper.js');
-const TOKEN = process.env.weatherTOKEN;
+const weatherTOKEN = process.env.weatherTOKEN;
+const locationTOKEN = process.env.locationTOKEN;
 
 class Controller {
+
+  geoCode(req, res) {
+
+    let config = {
+
+      params: {
+        address: req.query.inputValue,
+        key: locationTOKEN || require('../config.js').locationTOKEN,
+      }
+    };
+
+    return axios.get('https://maps.googleapis.com/maps/api/geocode/json', config)
+      .then((response) => {
+        res.send(response.data.results);
+      })
+      .catch((err) => {
+        console.log(err)
+        res.status(400);
+        res.send(err);
+      });
+  }
 
   theft(req, res) {
 
@@ -46,7 +68,7 @@ class Controller {
       url: 'https://api.openweathermap.org/data/2.5/onecall',
       method: 'GET',
       params: {
-        appid: TOKEN || require('../config.js').weatherTOKEN,
+        appid: weatherTOKEN || require('../config.js').weatherTOKEN,
         lat: req.query.lat,
         lon: req.query.lon,
         exclude: 'daily'
