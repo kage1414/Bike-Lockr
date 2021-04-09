@@ -9,7 +9,6 @@ class Controller {
   geoCode(req, res) {
 
     let config = {
-
       params: {
         address: req.query.inputValue,
         key: locationTOKEN || require('../config.js').locationTOKEN,
@@ -18,11 +17,14 @@ class Controller {
 
     return axios.get('https://maps.googleapis.com/maps/api/geocode/json', config)
       .then((response) => {
+        res.status(response.status);
         res.send(response.data.results);
       })
       .catch((err) => {
-        console.log(err);
-        res.status(400);
+        if (err) {
+          console.log(err);
+        }
+        res.status(err.response.status);
         res.send(err);
       });
   }
@@ -50,14 +52,15 @@ class Controller {
           incidents: incidents,
           theft: atRisk
         };
-
-        res.send(data);
+        res.status(response.status);
+        res.send(response.data.results);
       })
       .catch((err) => {
         if (err) {
           console.log(err);
         }
-        res.sendStatus(404);
+        res.status(err.response.status);
+        res.send(err);
       });
 
   }
@@ -82,10 +85,14 @@ class Controller {
         let data = {
           unixRainTime: process.env.weatherTime || unixRainTime
         };
-        res.send(data);
+        res.status(response.status);
+        res.send(response.data.results);
       })
       .catch((err) => {
-        res.status(400);
+        if (err) {
+          console.log(err);
+        }
+        res.status(err.response.status);
         res.send(err);
       });
   }
