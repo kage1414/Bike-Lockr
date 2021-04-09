@@ -60,8 +60,7 @@ class Controller {
         let data = {
           unixRainTime: process.env.weatherTime || unixRainTime
         };
-        res.sendStatus(400)
-        // res.send(data);
+        res.send(data);
       })
       .catch((err) => {
         res.status(400);

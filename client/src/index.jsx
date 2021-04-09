@@ -100,7 +100,7 @@ class App extends React.Component {
       })
       .catch((err) => {
         if (err) {
-          console.log(JSON.stringify(err.message));
+          console.log(err.message);
         }
         this.setState({
           loadingLocation: false,
