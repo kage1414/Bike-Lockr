@@ -5,17 +5,25 @@ const Weather = (props) => {
   let rainsAt = new Date(props.unixRainTime * 1000);
   let rainsIn = new Date(rainsAt.getTime() - Date.now());
 
-  let minutesUntilRain = Math.floor(rainsIn.getTime() / 1000 / 60);
+  let timeUntilRain = Math.floor(rainsIn.getTime() / 1000 / 60);
+  let timeString;
 
-  let isRaining = minutesUntilRain === 0;
+  if (timeUntilRain > 60) {
+    timeUntilRain = Math.floor(timeUntilRain / 60);
+    timeString = `${timeUntilRain} hours`;
+  } else {
+    timeString = `${timeUntilRain} minutes`;
+  }
+
+  let isRaining = timeUntilRain === 0;
 
   if (isRaining) {
     return (
       <div>It is currently raining</div>
     );
-  } else if (minutesUntilRain > 0) {
+  } else if (timeUntilRain > 0) {
     return (
-      <div>Precipitation predicted ~{minutesUntilRain} minutes</div>
+      <div>Precipitation predicted ~{timeString}</div>
     );
   } else {
     return (

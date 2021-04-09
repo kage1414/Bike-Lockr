@@ -108,14 +108,14 @@ class Controller {
       })
       .catch((err) => {
         if (err) {
-          console.log(err);
+          console.log(err.response.statusText);
         }
         if (err.response.status) {
           res.status(err.response.status);
         } else {
           res.status(400);
         }
-        res.send(err);
+        res.send(err.response.statusText);
       });
   }
 

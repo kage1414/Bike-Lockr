@@ -6,7 +6,7 @@ const Error = (props) => {
     <div>
       <br/>
       <div style={{color: 'maroon'}}>Error: {props.errorMessage}</div>
-      {props.consoleError && <div style={{ color: 'maroon' }}>{props.consoleError.message}</div>}
+      {props.consoleError && <div style={{ color: 'maroon' }}>{props.consoleError}</div>}
     </div>
   );
 

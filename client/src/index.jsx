@@ -47,7 +47,8 @@ class App extends React.Component {
         })
         .catch((error) => {
           this.setState({
-            errorMessage: 'Location Error'
+            errorMessage: 'Location Error',
+            consoleError: error.message
           });
         });
     } else {
@@ -60,10 +61,11 @@ class App extends React.Component {
           resolve(data);
         }, (error) => {
           this.setState({
-            errorMessage: 'Location Error'
+            errorMessage: 'Location Error',
+            consoleError: error.message
           });
           reject(error);
-        }, {maximumAge: 3000});
+        }, {maximumAge: 10000});
       });
     }
   }
@@ -80,7 +82,8 @@ class App extends React.Component {
       })
       .catch((error) => {
         this.setState({
-          errorMessage: 'Incident Error'
+          errorMessage: 'Incident Error',
+          consoleError: error.message
         });
       });
   }
@@ -96,8 +99,10 @@ class App extends React.Component {
         return response.data;
       })
       .catch((error) => {
+        console.error(error);
         this.setState({
-          errorMessage: 'Weather Error'
+          errorMessage: 'Weather Error',
+          consoleError: error.message
         });
       });
   }
@@ -145,15 +150,14 @@ class App extends React.Component {
 
         this.setState(state);
       })
-      .catch((err) => {
-        if (err) {
-          console.error(err);
+      .catch((error) => {
+        if (error) {
+          console.error(error);
         }
         this.setState({
           loadingLocation: false,
           loadingWeather: false,
           loadingData: false,
-          consoleError: err,
           error: true
         });
       });
