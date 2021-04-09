@@ -21,7 +21,7 @@ class Controller {
         res.send(response.data.results);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         res.status(400);
         res.send(err);
       });
