@@ -26,11 +26,13 @@ class Controller {
         if (err) {
           console.log(err);
         }
+
         if (err.response.status) {
           res.status(err.response.status);
         } else {
           res.status(400);
         }
+
         res.send(err);
       });
   }
