@@ -19,7 +19,7 @@ class App extends React.Component {
       loadingData: false,
       initialized: false,
       error: false,
-      epochRainTime: false
+      unixRainTime: false
     };
   }
 
@@ -124,7 +124,7 @@ class App extends React.Component {
       <div style={{textAlign: 'center'}}>
         <h1>Bike Lockr</h1>
         <Form getNearbyIncidents={this.gatherData.bind(this)} />
-        <AtRisk initialized={this.state.initialized} theft={this.state.theft} epochRainTime={this.state.epochRainTime} />
+        <AtRisk initialized={this.state.initialized} theft={this.state.theft} unixRainTime={this.state.unixRainTime} />
         <Loading location={this.state.loadingLocation} data={this.state.loadingData} weather={this.state.loadingWeather} />
         {this.state.incidents.length > 0 &&
         <IncidentList incidents={this.state.incidents} />}

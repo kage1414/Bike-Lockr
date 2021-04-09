@@ -3,7 +3,7 @@ import Weather from './Weather.jsx';
 
 const AtRisk = (props) => {
 
-  let rainsAt = new Date(props.epochRainTime * 1000);
+  let rainsAt = new Date(props.unixRainTime * 1000);
   let rainsIn = new Date(rainsAt.getTime() - Date.now());
 
   let risk;
@@ -14,7 +14,7 @@ const AtRisk = (props) => {
     subRisk = 'Theft Risk';
   } else if (rainsIn > 0) {
     risk = 'Yes,';
-    subRisk = 'But it will get wet';
+    subRisk = 'But it might get wet';
   } else {
     risk = 'Yes...';
     subRisk = 'but you should always lock it up';
