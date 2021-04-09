@@ -114,21 +114,14 @@ class App extends React.Component {
 
   render() {
 
-    const renderIncidentList = () => {
-      if (this.state.incidents.length > 0) {
-        return <IncidentList incidents={this.state.incidents} />;
-      }
-    };
-
     return (
       <div style={{textAlign: 'center'}}>
         <h1>Bike Lockr</h1>
         <Form getNearbyIncidents={this.gatherData.bind(this)} />
         <AtRisk initialized={this.state.initialized} theft={this.state.theft} unixRainTime={this.state.unixRainTime} />
+        {<Error error={this.state.error} /> && this.state.error}
         <Loading location={this.state.loadingLocation} data={this.state.loadingData} weather={this.state.loadingWeather} />
-        {this.state.incidents.length > 0 &&
-        <IncidentList incidents={this.state.incidents} />}
-        {this.state.error && <Error error={this.state.error} />}
+        {<IncidentList incidents={this.state.incidents} /> && this.state.incidents.length > 0}
       </div>
     );
   }
