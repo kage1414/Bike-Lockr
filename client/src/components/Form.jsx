@@ -23,7 +23,8 @@ class Form extends React.Component {
         {/* <input type="text"></input> */}
         <input type="submit" style={{ width: 660, height: 80, fontSize: '24px' }} onClick={this.getNearbyIncidents} value="Can I Leave My Bike Unattended?"></input>
         <br/>
-        <input type="text" placeholder="Set Location" onChange={this.handleChange}></input>
+        <br/>
+        <input type="text" placeholder="Set Custom Location" onChange={this.handleChange}></input>
       </form>
     );
   }
