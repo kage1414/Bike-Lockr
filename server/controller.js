@@ -56,7 +56,7 @@ class Controller {
     return axios(config)
       .then((response) => {
 
-        let unixRainTime = helper.filterWeather(response.data);
+        let unixRainTime = helper.getUnixRainTime(response.data);
         let data = {
           unixRainTime: process.env.weatherTime || unixRainTime
         };

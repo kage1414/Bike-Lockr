@@ -10,7 +10,7 @@ module.exports.atRiskIncidents = (incidents) => {
   return false;
 };
 
-module.exports.filterWeather = (weather) => {
+module.exports.getUnixRainTime = (weather) => {
 
   for (let i = 0; i < weather.minutely.length; i++) {
     if (weather.minutely[i].precipitation > 0) {
