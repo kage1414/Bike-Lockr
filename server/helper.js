@@ -18,7 +18,7 @@ module.exports.filterWeather = (weather) => {
     }
   }
 
-  for (let i = 1; i < weather.hourly.length; i++) {
+  for (let i = 1; i <= 6; i++) {
 
     if (weather.hourly[i].rain) {
       return weather.hourly[i].dt;
