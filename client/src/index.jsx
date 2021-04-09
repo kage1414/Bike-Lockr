@@ -100,13 +100,16 @@ class App extends React.Component {
       })
       .catch((err) => {
         if (err) {
-          console.log(err);
+          console.log(JSON.stringify(err.message));
         }
         this.setState({
           loadingLocation: false,
           loadingWeather: false,
           loadingData: false,
-          error: err
+          initialized: false,
+          error: false,
+          unixRainTime: false
+          // errorMessage: err.message
         });
       });
 
@@ -119,9 +122,9 @@ class App extends React.Component {
         <h1>Bike Lockr</h1>
         <Form getNearbyIncidents={this.gatherData.bind(this)} />
         <AtRisk initialized={this.state.initialized} theft={this.state.theft} unixRainTime={this.state.unixRainTime} />
-        {<Error error={this.state.error} /> && this.state.error}
+        {/* {this.state.errorMessage && <Error errorMessage={this.state.errorMessage} />} */}
         <Loading location={this.state.loadingLocation} data={this.state.loadingData} weather={this.state.loadingWeather} />
-        {<IncidentList incidents={this.state.incidents} /> && this.state.incidents.length > 0}
+        {this.state.incidents.length > 0 && <IncidentList incidents={this.state.incidents} />}
       </div>
     );
   }

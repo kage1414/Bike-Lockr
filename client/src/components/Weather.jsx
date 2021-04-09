@@ -13,7 +13,7 @@ const Weather = (props) => {
     return (
       <div>It is currently raining</div>
     );
-  } else if (props.rainsIn.getTime() > 0) {
+  } else if (minutesUntilRain > 0) {
     return (
       <div>Precipitation predicted ~{minutesUntilRain} minutes</div>
     );

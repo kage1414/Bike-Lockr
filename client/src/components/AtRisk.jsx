@@ -9,7 +9,7 @@ const AtRisk = (props) => {
   if (props.theft) {
     risk = 'Do Not Leave Unattended';
     subRisk = 'Theft Risk';
-  } else if (rainsIn > 0) {
+  } else if (props.unixRainTime > 0) {
     risk = 'Yes,';
     subRisk = 'But it might get wet';
   } else {
