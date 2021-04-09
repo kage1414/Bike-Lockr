@@ -128,6 +128,7 @@ class App extends React.Component {
         <Loading location={this.state.loadingLocation} data={this.state.loadingData} weather={this.state.loadingWeather} />
         {this.state.incidents.length > 0 &&
         <IncidentList incidents={this.state.incidents} />}
+        {this.state.error && <Error error={this.state.error} />}
       </div>
     );
   }
