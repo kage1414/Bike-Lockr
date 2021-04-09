@@ -23,7 +23,7 @@ const AtRisk = (props) => {
       <div>
         <h2 style={{margin: '0px'}}>{risk}</h2>
         <h3 style={{ margin: '0px' }}>{subRisk}</h3>
-        <Weather unixRainTime={props.unixRainTime} rainsIn={rainsIn} />
+        <Weather unixRainTime={props.unixRainTime} />
       </div>}
     </div>
   );
