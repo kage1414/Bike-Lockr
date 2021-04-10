@@ -19,15 +19,27 @@ const Weather = (props) => {
 
   if (isRaining) {
     return (
-      <div>It is currently raining</div>
+      <div>
+        <br/>
+        <div>Precipitation:</div>
+        <div>It is currently raining</div>
+      </div>
     );
   } else if (timeUntilRain > 0) {
     return (
-      <div>Precipitation predicted ~{timeString}</div>
+      <div>
+        <br/>
+        <div>Precipitation:</div>
+        <div>Precipitation predicted ~{timeString}</div>
+      </div>
     );
   } else {
     return (
-      <div>No precipitation in the forecast</div>
+      <div>
+        <br/>
+        <div>Precipitation:</div>
+        <div>No precipitation in the forecast</div>
+      </div>
     );
   }
 
