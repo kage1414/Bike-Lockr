@@ -17,31 +17,24 @@ const Weather = (props) => {
 
   let isRaining = timeUntilRain === 0;
 
+
+  let rainString;
+
   if (isRaining) {
-    return (
-      <div>
-        <br/>
-        <div>Precipitation:</div>
-        <div>It is currently raining</div>
-      </div>
-    );
+    rainString = 'It is currently raining';
   } else if (timeUntilRain > 0) {
-    return (
-      <div>
-        <br/>
-        <div>Precipitation:</div>
-        <div>Precipitation predicted ~{timeString}</div>
-      </div>
-    );
+    rainstring = `Precipitation predicted ~${timeString}`;
   } else {
-    return (
-      <div>
-        <br/>
-        <div>Precipitation:</div>
-        <div>No precipitation in the forecast</div>
-      </div>
-    );
+    rainString = 'No precipitation in the forecast';
   }
+
+  return (
+    <div>
+      <br/>
+      <div>Precipitation:</div>
+      <div>{rainString}</div>
+    </div>
+  );
 
 };
 
