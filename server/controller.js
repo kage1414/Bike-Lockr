@@ -53,6 +53,7 @@ class Controller {
       .then((response) => {
 
         let incidents = response.data.incidents;
+        console.log(incidents);
         let atRisk = helper.atRiskIncidents(incidents);
         incidents = helper.filterTheft(incidents);
 
