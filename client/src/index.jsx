@@ -5,7 +5,7 @@ import IncidentList from './components/IncidentList.jsx';
 import Form from './components/Form.jsx';
 import Loading from './components/Loading.jsx';
 import AtRisk from './components/AtRisk.jsx';
-import Error from './components/Error.jsx';
+import Error from './components/Error.tsx';
 
 class App extends React.Component {
 
@@ -107,7 +107,8 @@ class App extends React.Component {
       });
   }
 
-  gatherData() {
+  gatherData(e) {
+    e.preventDefault();
 
     this.setState({
       loadingLocation: true,
